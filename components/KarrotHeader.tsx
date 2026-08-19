@@ -5,9 +5,7 @@ import {
   IconMagnifyingglassLine,
   IconBellLine,
   IconChevronDownLine,
-  IconCheckmarkShieldFill,
   IconXmarkLine,
-  IconSparkle2Fill,
 } from "@karrotmarket/react-monochrome-icon";
 
 export interface HeaderMode {
@@ -49,19 +47,13 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#F2F3F6]">
       {/* Top Pre-notice Banner */}
-      <div className="bg-[#FFF2E8] px-4 py-1.5 flex items-center justify-between text-[11px] font-semibold text-[#FF6F0F]">
-        <div className="flex items-center gap-1">
-          <span className="text-sm">🥕</span>
-          <span>당근 공식인증 판매점: 전국 통신 3사 지원금 + 단독 추가지원금 최대 43만 원 즉시할인</span>
-        </div>
+      <div className="bg-[#FFF2E8] px-3.5 py-1.5 flex items-center justify-between text-[11px] font-semibold text-[#FF6F0F] whitespace-nowrap">
+        <span className="truncate">통신 3사 공시 지원금 + 당근 단독 추가 지원금 최대 즉시 할인</span>
         <button
           onClick={onOpenKait}
-          className="flex items-center gap-0.5 text-xs text-[#0369a1] font-bold hover:underline shrink-0 ml-2"
+          className="text-xs text-[#0369a1] font-bold hover:underline shrink-0 ml-2"
         >
-          <span className="w-3.5 h-3.5 text-blue-600 inline-flex items-center justify-center">
-            <IconCheckmarkShieldFill />
-          </span>
-          <span>사전승낙서</span>
+          사전승낙서
         </button>
       </div>
 
