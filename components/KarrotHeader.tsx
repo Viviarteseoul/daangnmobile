@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import {
   IconMagnifyingglassLine,
   IconBellLine,
-  IconChevronDownLine,
   IconXmarkLine,
 } from "@karrotmarket/react-monochrome-icon";
 
@@ -47,14 +46,10 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#F2F3F6]">
       {/* Top Pre-notice Banner */}
-      <div className="bg-[#FFF2E8] px-3.5 py-1.5 flex items-center justify-between text-[11px] font-semibold text-[#FF6F0F] whitespace-nowrap">
-        <span className="truncate">통신 3사 공시 지원금 + 당근 단독 추가 지원금 최대 즉시 할인</span>
-        <button
-          onClick={onOpenKait}
-          className="text-xs text-[#0369a1] font-bold hover:underline shrink-0 ml-2"
-        >
-          사전승낙서
-        </button>
+      <div className="bg-[#FFF2E8] px-3.5 py-1.5 flex items-center justify-center text-[11px] font-semibold text-[#FF6F0F] whitespace-nowrap overflow-hidden">
+        <span className="truncate">
+          통신 3사 공시 지원금 + 🥕 당근 단독 추가 지원금 최대 즉시 할인
+        </span>
       </div>
 
       {/* Main Header Bar */}
@@ -68,9 +63,6 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
             <span className="truncate max-w-[210px]">{currentMode.title}</span>
             <span className="px-1.5 py-0.5 bg-[#FFF2E8] text-[#FF6F0F] text-[10px] font-extrabold rounded-md shrink-0">
               {currentMode.badge}
-            </span>
-            <span className="text-xs text-[#868B94] inline-flex items-center shrink-0">
-              <IconChevronDownLine />
             </span>
           </button>
 
