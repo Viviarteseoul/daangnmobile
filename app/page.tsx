@@ -244,7 +244,7 @@ export default function Home() {
                 <span className="text-[#FF6F0F]">당근모바일 🥕</span>
               </h2>
               <p className="text-xs text-[#4D5159] leading-snug">
-                통신 3사 지원금 + 단독 추가지원금 최대 43만 원 할인! 아이폰 18 사전예약 접수중 ⚡️
+                통신 3사 지원금 + 단독 추가지원금 최대 43만 원 할인!
               </p>
             </div>
             <div className="text-3xl">📱</div>
