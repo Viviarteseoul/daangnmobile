@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   IconMagnifyingglassLine,
   IconBellLine,
@@ -41,8 +41,6 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
   isSearchOpen,
   setIsSearchOpen,
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#F2F3F6]">
       {/* Top Pre-notice Banner */}
@@ -54,47 +52,12 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
 
       {/* Main Header Bar */}
       <div className="px-4 h-14 flex items-center justify-between">
-        {/* Left: Dynamic Campaign Selector (아이폰 18 사전예약 / 전국 특가 성지 등) */}
-        <div className="relative">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex items-center gap-1.5 text-[16px] font-black text-[#212124] hover:text-[#FF6F0F] transition-colors"
-          >
-            <span className="truncate max-w-[210px]">{currentMode.title}</span>
-            <span className="px-1.5 py-0.5 bg-[#FFF2E8] text-[#FF6F0F] text-[10px] font-extrabold rounded-md shrink-0">
-              {currentMode.badge}
-            </span>
-          </button>
-
-          {/* Campaign / Mode Menu Modal */}
-          {isMenuOpen && (
-            <div className="absolute top-full left-0 mt-1.5 w-64 bg-white rounded-2xl shadow-xl border border-[#EAEBEE] py-1.5 z-50 animate-fadeIn">
-              <div className="px-3.5 py-1.5 text-[10px] font-bold text-[#868B94] border-b border-[#F2F3F6] flex items-center justify-between">
-                <span>실시간 기획전 & 사전예약</span>
-                <span className="text-[#FF6F0F]">전국 공식판매</span>
-              </div>
-              <div className="divide-y divide-[#F8F9FA]">
-                {HEADER_MODES.map((mode) => (
-                  <button
-                    key={mode.id}
-                    onClick={() => {
-                      onSelectMode(mode);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-3.5 py-2.5 text-xs font-semibold hover:bg-[#FFF2E8] hover:text-[#FF6F0F] transition-colors flex items-center justify-between ${
-                      currentMode.id === mode.id ? "text-[#FF6F0F] font-black bg-[#FFF2E8]/40" : "text-[#212124]"
-                    }`}
-                  >
-                    <div>
-                      <div className="font-bold">{mode.title}</div>
-                      <div className="text-[10px] text-[#868B94] mt-0.5">{mode.badge}</div>
-                    </div>
-                    {currentMode.id === mode.id && <span className="text-xs">🥕</span>}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        {/* Left: Brand Logo & Title */}
+        <div className="flex items-center gap-1.5 select-none">
+          <span className="text-[26px] leading-none flex items-center justify-center">🥕</span>
+          <span className="text-[19px] font-black text-[#212124] tracking-tight">
+            당근<span className="text-[#FF6F0F]">모바일</span>
+          </span>
         </div>
 
         {/* Right: Icons (Search, Bell) */}
