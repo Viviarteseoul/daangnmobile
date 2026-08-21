@@ -10,6 +10,7 @@ import { KarrotChatModal } from "@/components/KarrotChatModal";
 import { KarrotKaitModal } from "@/components/KarrotKaitModal";
 import { KarrotStatusModal } from "@/components/KarrotStatusModal";
 import { KarrotAdminModal } from "@/components/KarrotAdminModal";
+import { CategoryCarousel, CategoryType } from "@/components/CategoryCarousel";
 import { PHONES_DATA, Phone } from "@/data/phones";
 import { ApplicationSubmission } from "@/types/application";
 import {
@@ -28,7 +29,7 @@ export default function Home() {
   // Search & Category Filter
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<"all" | "hot" | "apple" | "samsung" | "budget">("all");
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("all");
 
   // Modals
   const [isKaitOpen, setIsKaitOpen] = useState(false);
@@ -175,62 +176,11 @@ export default function Home() {
           setIsSearchOpen={setIsSearchOpen}
         />
 
-        {/* Category Horizontal Scroll Chips */}
-        <div className="px-4 py-2.5 bg-white border-b border-[#F2F3F6] overflow-x-auto flex gap-1.5 scrollbar-none sticky top-14 z-30 bg-white/95 backdrop-blur-xs">
-          <button
-            onClick={() => setSelectedCategory("all")}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
-              selectedCategory === "all"
-                ? "bg-[#212124] text-white"
-                : "bg-[#F2F3F6] text-[#4D5159] hover:bg-[#EAEBEE]"
-            }`}
-          >
-            전체
-          </button>
-          <button
-            onClick={() => setSelectedCategory("hot")}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 flex items-center gap-1 ${
-              selectedCategory === "hot"
-                ? "bg-[#FF6F0F] text-white"
-                : "bg-[#FFF2E8] text-[#FF6F0F] hover:bg-[#FFE0CC]"
-            }`}
-          >
-            <span className="w-3 h-3 inline-flex items-center">
-              <IconSparkle2Fill />
-            </span>
-            <span>실시간 특가</span>
-          </button>
-          <button
-            onClick={() => setSelectedCategory("apple")}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
-              selectedCategory === "apple"
-                ? "bg-[#212124] text-white"
-                : "bg-[#F2F3F6] text-[#4D5159] hover:bg-[#EAEBEE]"
-            }`}
-          >
-            🍎 아이폰 18 / 16
-          </button>
-          <button
-            onClick={() => setSelectedCategory("samsung")}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
-              selectedCategory === "samsung"
-                ? "bg-[#212124] text-white"
-                : "bg-[#F2F3F6] text-[#4D5159] hover:bg-[#EAEBEE]"
-            }`}
-          >
-            🤖 갤럭시 S24
-          </button>
-          <button
-            onClick={() => setSelectedCategory("budget")}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
-              selectedCategory === "budget"
-                ? "bg-[#212124] text-white"
-                : "bg-[#F2F3F6] text-[#4D5159] hover:bg-[#EAEBEE]"
-            }`}
-          >
-            🎁 기기값 0원
-          </button>
-        </div>
+        {/* Category Carousel (Hover Animated & Scrollable) */}
+        <CategoryCarousel
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
 
         {/* Hero Promo Banner */}
         <div className="p-4 bg-gradient-to-br from-[#FFF2E8] via-[#FFF8F3] to-white border-b border-[#F2F3F6]">

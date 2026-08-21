@@ -25,9 +25,9 @@ interface KarrotHeaderProps {
 }
 
 export const HEADER_MODES: HeaderMode[] = [
-  { id: "pre-order", title: "아이폰 18 사전예약", badge: "단독혜택 🔥", categoryFilter: "apple" },
+  { id: "pre-order", title: "아이폰 18 / 17 사전예약", badge: "단독혜택 🔥", categoryFilter: "apple" },
   { id: "hot-flash", title: "전국 실시간 특가 성지", badge: "최대지원 ⚡️", categoryFilter: "hot" },
-  { id: "samsung-s24", title: "갤럭시 S24 울트라 즉시출고", badge: "당일퀵 🤖", categoryFilter: "samsung" },
+  { id: "samsung-s26", title: "갤럭시 폴드8 / S26 즉시출고", badge: "당일퀵 🤖", categoryFilter: "samsung" },
   { id: "zero-phone", title: "기기값 0원 효도/키즈폰", badge: "월0원 🎁", categoryFilter: "budget" },
   { id: "all-nation", title: "전국 공식인증 판매점", badge: "수도권당일 🛵", categoryFilter: "all" },
 ];
@@ -91,7 +91,7 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
             <input
               type="text"
               autoFocus
-              placeholder="단말기 검색 (예: 아이폰18 사전예약, S24, Z플립6, 0원)"
+              placeholder="단말기 검색 (예: 아이폰 18/17, 갤럭시 폴드8, S26, 0원)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-8 py-2.5 bg-[#F2F3F6] rounded-xl text-xs font-medium text-[#212124] focus:bg-white focus:ring-2 focus:ring-[#FF6F0F] focus:outline-none"
