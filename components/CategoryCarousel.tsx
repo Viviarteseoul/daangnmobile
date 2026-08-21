@@ -104,14 +104,14 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     const edgeThreshold = Math.min(width * 0.28, 90); // right/left trigger boundary
 
     if (x > width - edgeThreshold && canScrollRight) {
-      // Near right edge -> animate scroll right
+      // Near right edge -> animate scroll right (faster response)
       const factor = (x - (width - edgeThreshold)) / edgeThreshold;
-      const speed = Math.max(2, Math.min(6, factor * 6));
+      const speed = Math.max(4, Math.min(10, factor * 10));
       startAutoScroll(speed);
     } else if (x < edgeThreshold && canScrollLeft) {
-      // Near left edge -> animate scroll left
+      // Near left edge -> animate scroll left (faster response)
       const factor = (edgeThreshold - x) / edgeThreshold;
-      const speed = -Math.max(2, Math.min(6, factor * 6));
+      const speed = -Math.max(4, Math.min(10, factor * 10));
       startAutoScroll(speed);
     } else {
       stopAutoScroll();
@@ -145,7 +145,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     if (!isDragging.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
+    const walk = (x - startX.current) * 1.8;
     if (Math.abs(walk) > 4) {
       hasDragged.current = true;
     }
@@ -160,7 +160,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
   // Step scroll button click
   const scrollStep = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const distance = direction === "right" ? 180 : -180;
+    const distance = direction === "right" ? 220 : -220;
     scrollRef.current.scrollBy({ left: distance, behavior: "smooth" });
   };
 
@@ -174,10 +174,10 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
       {/* Left Gradient & Scroll Button */}
       {canScrollLeft && (
         <div
-          className={`absolute left-0 top-0 bottom-0 z-20 flex items-center pl-1 pr-4 bg-gradient-to-r from-white via-white/90 to-transparent transition-opacity duration-200 ${
+          className={`absolute left-0 top-0 bottom-0 z-20 flex items-center pl-1 pr-4 bg-gradient-to-r from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(-4)}
+          onMouseEnter={() => startAutoScroll(-8)}
           onMouseLeave={stopAutoScroll}
         >
           <button
@@ -241,10 +241,10 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
       {/* Right Gradient & Animated Scroll Button */}
       {canScrollRight && (
         <div
-          className={`absolute right-0 top-0 bottom-0 z-20 flex items-center pr-1 pl-4 bg-gradient-to-l from-white via-white/90 to-transparent transition-opacity duration-200 ${
+          className={`absolute right-0 top-0 bottom-0 z-20 flex items-center pr-1 pl-4 bg-gradient-to-l from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(4)}
+          onMouseEnter={() => startAutoScroll(8)}
           onMouseLeave={stopAutoScroll}
         >
           <button
