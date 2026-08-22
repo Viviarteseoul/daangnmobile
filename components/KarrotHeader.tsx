@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   IconMagnifyingglassLine,
   IconBellLine,
   IconXmarkLine,
 } from "@karrotmarket/react-monochrome-icon";
-import { RotateCw } from "lucide-react";
 
 export interface HeaderMode {
   id: string;
@@ -39,47 +38,25 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
   isSearchOpen,
   setIsSearchOpen,
 }) => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-
-  // '당근 모바일' 타이틀 클릭 시 파워 새로고침 동작: 세션/캐시를 정리하고 즉시 최신 데이터로 새로고침
+  // '당근 모바일' 타이틀 클릭 시 파워 새로고침 동작: 세션/캐시 정리 후 즉시 최신 데이터로 리로드
   const handlePowerRefresh = () => {
-    if (isRefreshing) return;
-    setIsRefreshing(true);
-    setShowToast(true);
-
     try {
       if (typeof window !== "undefined") {
         sessionStorage.clear();
         localStorage.removeItem("daangn_cache_sync");
-      }
-    } catch {
-      // ignore
-    }
-
-    setTimeout(() => {
-      if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.searchParams.set("t", Date.now().toString());
         window.location.href = url.toString();
       }
-    }, 400);
+    } catch {
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
+    }
   };
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#F2F3F6]">
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="absolute top-full left-0 right-0 z-50 flex justify-center p-2 pointer-events-none animate-fadeIn">
-          <div className="px-3.5 py-1.5 bg-[#212124] text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 inline-flex items-center justify-center animate-spin text-[#FF6F0F]">
-              <RotateCw className="w-3.5 h-3.5" />
-            </span>
-            <span>⚡️ 최신 지원금 & 단말기 시세 파워 새로고침 중...</span>
-          </div>
-        </div>
-      )}
-
       {/* Top Pre-notice Banner */}
       <div className="bg-[#FFF2E8] px-3.5 py-1.5 flex items-center justify-center text-[11px] font-semibold text-[#FF6F0F] whitespace-nowrap overflow-hidden">
         <span className="truncate">
@@ -94,13 +71,9 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
           type="button"
           onClick={handlePowerRefresh}
           className="flex items-center gap-2 select-none cursor-pointer group text-left p-0 bg-transparent border-0 outline-none"
-          title="당근 모바일 (클릭 시 최신 지원금 & 단말기 시세 파워 새로고침)"
+          title="당근 모바일 (클릭 시 최신 데이터 파워 새로고침)"
         >
-          <span
-            className={`text-[26px] leading-none flex items-center justify-center transition-transform duration-200 ${
-              isRefreshing ? "animate-spin" : "group-hover:scale-110"
-            }`}
-          >
+          <span className="text-[26px] leading-none flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
             🥕
           </span>
           <span className="text-[19px] font-black text-[#212124] tracking-tight group-hover:text-[#FF6F0F] transition-colors flex items-center gap-1">

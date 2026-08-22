@@ -104,14 +104,14 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     const edgeThreshold = Math.min(width * 0.35, 120); // right/left trigger boundary
 
     if (x > width - edgeThreshold && canScrollRight) {
-      // Near right edge -> fast scroll right
+      // Near right edge -> smooth scroll right
       const factor = (x - (width - edgeThreshold)) / edgeThreshold;
-      const speed = Math.max(18, Math.min(45, factor * 45));
+      const speed = Math.max(3, Math.min(9, factor * 9));
       startAutoScroll(speed);
     } else if (x < edgeThreshold && canScrollLeft) {
-      // Near left edge -> fast scroll left
+      // Near left edge -> smooth scroll left
       const factor = (edgeThreshold - x) / edgeThreshold;
-      const speed = -Math.max(18, Math.min(45, factor * 45));
+      const speed = -Math.max(3, Math.min(9, factor * 9));
       startAutoScroll(speed);
     } else {
       stopAutoScroll();
@@ -127,7 +127,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (!scrollRef.current) return;
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    scrollRef.current.scrollLeft += delta * 2.2;
+    scrollRef.current.scrollLeft += delta * 1.0;
     updateScrollStatus();
   };
 
@@ -144,7 +144,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     if (!isDragging.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2.2;
+    const walk = (x - startX.current) * 1.2;
     if (Math.abs(walk) > 4) {
       hasDragged.current = true;
     }
@@ -159,7 +159,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
   // Step scroll button click
   const scrollStep = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const distance = direction === "right" ? 340 : -340;
+    const distance = direction === "right" ? 220 : -220;
     scrollRef.current.scrollBy({ left: distance, behavior: "smooth" });
   };
 
@@ -176,7 +176,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
           className={`absolute left-0 top-0 bottom-0 z-20 flex items-center pl-1 pr-4 bg-gradient-to-r from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(-38)}
+          onMouseEnter={() => startAutoScroll(-8)}
           onMouseLeave={stopAutoScroll}
         >
           <button
@@ -243,7 +243,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
           className={`absolute right-0 top-0 bottom-0 z-20 flex items-center pr-1 pl-4 bg-gradient-to-l from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(38)}
+          onMouseEnter={() => startAutoScroll(8)}
           onMouseLeave={stopAutoScroll}
         >
           <button
