@@ -101,17 +101,17 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     const rect = scrollRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const width = rect.width;
-    const edgeThreshold = Math.min(width * 0.32, 110); // right/left trigger boundary
+    const edgeThreshold = Math.min(width * 0.35, 120); // right/left trigger boundary
 
     if (x > width - edgeThreshold && canScrollRight) {
       // Near right edge -> fast scroll right
       const factor = (x - (width - edgeThreshold)) / edgeThreshold;
-      const speed = Math.max(12, Math.min(28, factor * 28));
+      const speed = Math.max(18, Math.min(45, factor * 45));
       startAutoScroll(speed);
     } else if (x < edgeThreshold && canScrollLeft) {
       // Near left edge -> fast scroll left
       const factor = (edgeThreshold - x) / edgeThreshold;
-      const speed = -Math.max(12, Math.min(28, factor * 28));
+      const speed = -Math.max(18, Math.min(45, factor * 45));
       startAutoScroll(speed);
     } else {
       stopAutoScroll();
@@ -126,10 +126,9 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
   // Convert vertical mouse wheel to horizontal scroll
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (!scrollRef.current) return;
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      scrollRef.current.scrollLeft += e.deltaY * 1.8;
-      updateScrollStatus();
-    }
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    scrollRef.current.scrollLeft += delta * 2.2;
+    updateScrollStatus();
   };
 
   // Drag to scroll handlers
@@ -145,7 +144,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
     if (!isDragging.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2.8;
+    const walk = (x - startX.current) * 2.2;
     if (Math.abs(walk) > 4) {
       hasDragged.current = true;
     }
@@ -160,7 +159,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
   // Step scroll button click
   const scrollStep = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    const distance = direction === "right" ? 300 : -300;
+    const distance = direction === "right" ? 340 : -340;
     scrollRef.current.scrollBy({ left: distance, behavior: "smooth" });
   };
 
@@ -177,13 +176,13 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
           className={`absolute left-0 top-0 bottom-0 z-20 flex items-center pl-1 pr-4 bg-gradient-to-r from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(-22)}
+          onMouseEnter={() => startAutoScroll(-38)}
           onMouseLeave={stopAutoScroll}
         >
           <button
             type="button"
             onClick={() => scrollStep("left")}
-            className="w-6 h-6 rounded-full bg-white border border-[#EAEBEE] text-[#4D5159] hover:text-[#FF6F0F] hover:border-[#FF6F0F] hover:bg-[#FFF2E8] shadow-xs flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
+            className="w-6 h-6 rounded-full bg-white border border-[#EAEBEE] text-[#4D5159] hover:text-[#FF6F0F] hover:border-[#FF6F0F] hover:bg-[#FFF2E8] shadow-xs flex items-center justify-center transition-transform hover:scale-110 active:scale-95 cursor-pointer"
             aria-label="왼쪽으로 스크롤"
           >
             <span className="w-3.5 h-3.5 inline-flex items-center justify-center">
@@ -200,7 +199,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseDrag}
         onMouseUp={handleMouseUp}
-        className="px-4 py-2.5 overflow-x-auto flex gap-1.5 scrollbar-none cursor-grab active:cursor-grabbing scroll-smooth"
+        className="px-4 py-2.5 overflow-x-auto flex gap-1.5 scrollbar-none cursor-grab active:cursor-grabbing"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {CATEGORIES.map((cat) => {
@@ -216,7 +215,7 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
                   onSelectCategory(cat.id);
                 }
               }}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 flex items-center gap-1 hover:-translate-y-0.5 active:translate-y-0 duration-150 ${
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 flex items-center gap-1 hover:-translate-y-0.5 active:translate-y-0 duration-150 cursor-pointer ${
                 isSelected
                   ? isHot
                     ? "bg-[#FF6F0F] text-white shadow-xs"
@@ -244,13 +243,13 @@ export const CategoryCarousel: React.FC<CategoryCarouselProps> = ({
           className={`absolute right-0 top-0 bottom-0 z-20 flex items-center pr-1 pl-4 bg-gradient-to-l from-white via-white/90 to-transparent transition-opacity duration-150 ${
             isHovered ? "opacity-100" : "opacity-90"
           }`}
-          onMouseEnter={() => startAutoScroll(22)}
+          onMouseEnter={() => startAutoScroll(38)}
           onMouseLeave={stopAutoScroll}
         >
           <button
             type="button"
             onClick={() => scrollStep("right")}
-            className="w-6 h-6 rounded-full bg-white border border-[#EAEBEE] text-[#4D5159] hover:text-[#FF6F0F] hover:border-[#FF6F0F] hover:bg-[#FFF2E8] shadow-xs flex items-center justify-center transition-all hover:scale-110 active:scale-95 group/btn"
+            className="w-6 h-6 rounded-full bg-white border border-[#EAEBEE] text-[#4D5159] hover:text-[#FF6F0F] hover:border-[#FF6F0F] hover:bg-[#FFF2E8] shadow-xs flex items-center justify-center transition-all hover:scale-110 active:scale-95 group/btn cursor-pointer"
             aria-label="우측으로 스크롤"
           >
             <span className="w-3.5 h-3.5 inline-flex items-center justify-center transition-transform group-hover/btn:translate-x-0.5 animate-pulse">

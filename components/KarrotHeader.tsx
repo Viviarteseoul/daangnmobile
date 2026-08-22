@@ -6,7 +6,7 @@ import {
   IconBellLine,
   IconXmarkLine,
 } from "@karrotmarket/react-monochrome-icon";
-import { RotateCw, Zap } from "lucide-react";
+import { RotateCw } from "lucide-react";
 
 export interface HeaderMode {
   id: string;
@@ -16,9 +16,9 @@ export interface HeaderMode {
 }
 
 interface KarrotHeaderProps {
-  currentMode: HeaderMode;
-  onSelectMode: (mode: HeaderMode) => void;
-  onOpenKait: () => void;
+  currentMode?: HeaderMode;
+  onSelectMode?: (mode: HeaderMode) => void;
+  onOpenKait?: () => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   isSearchOpen: boolean;
@@ -42,7 +42,7 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
-  // 파워 새로고침 동작: 세션/캐시를 정리하고 즉시 최신 데이터로 새로고침
+  // '당근 모바일' 타이틀 클릭 시 파워 새로고침 동작: 세션/캐시를 정리하고 즉시 최신 데이터로 새로고침
   const handlePowerRefresh = () => {
     if (isRefreshing) return;
     setIsRefreshing(true);
@@ -63,7 +63,7 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
         url.searchParams.set("t", Date.now().toString());
         window.location.href = url.toString();
       }
-    }, 450);
+    }, 400);
   };
 
   return (
@@ -89,49 +89,33 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
 
       {/* Main Header Bar */}
       <div className="px-4 h-14 flex items-center justify-between gap-2">
-        {/* Left: 당근 모바일 로고 및 타이틀 */}
-        <div
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }
-          }}
-          className="flex items-center gap-1.5 select-none cursor-pointer group shrink-0"
+        {/* Left: 당근 모바일 로고 및 타이틀 (클릭 시 파워 새로고침) */}
+        <button
+          type="button"
+          onClick={handlePowerRefresh}
+          className="flex items-center gap-2 select-none cursor-pointer group text-left p-0 bg-transparent border-0 outline-none"
+          title="당근 모바일 (클릭 시 최신 지원금 & 단말기 시세 파워 새로고침)"
         >
-          <div className="w-8 h-8 rounded-xl bg-[#FFF2E8] flex items-center justify-center text-[19px] shadow-2xs group-hover:scale-105 transition-transform duration-150">
-            🥕
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="text-[18px] font-black text-[#212124] tracking-tight group-hover:text-[#FF6F0F] transition-colors">
-              당근
-            </span>
-            <span className="px-1.5 py-0.5 bg-[#FF6F0F] text-white text-[10px] font-black rounded-md tracking-tight shadow-2xs">
-              모바일
-            </span>
-          </div>
-        </div>
-
-        {/* Right: 파워 새로고침 버튼 & 검색 & 알림 아이콘 */}
-        <div className="flex items-center gap-1.5 text-[#212124]">
-          {/* 파워 새로고침 버튼 */}
-          <button
-            type="button"
-            onClick={handlePowerRefresh}
-            disabled={isRefreshing}
-            className="flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-[#FF6F0F] to-[#FF8A3D] text-white rounded-full text-[11px] font-black hover:opacity-95 active:scale-95 transition-all shadow-2xs shrink-0 cursor-pointer disabled:opacity-80"
-            title="캐시 삭제 및 최신 데이터로 파워 새로고침"
+          <span
+            className={`text-[26px] leading-none flex items-center justify-center transition-transform duration-200 ${
+              isRefreshing ? "animate-spin" : "group-hover:scale-110"
+            }`}
           >
-            <span className={`inline-flex items-center justify-center ${isRefreshing ? "animate-spin" : ""}`}>
-              <RotateCw className="w-3.5 h-3.5" />
-            </span>
-            <span>{isRefreshing ? "새로고침..." : "파워 새로고침"}</span>
-          </button>
+            🥕
+          </span>
+          <span className="text-[19px] font-black text-[#212124] tracking-tight group-hover:text-[#FF6F0F] transition-colors flex items-center gap-1">
+            <span>당근</span>
+            <span className="text-[#FF6F0F]">모바일</span>
+          </span>
+        </button>
 
+        {/* Right: 검색 & 알림 아이콘 */}
+        <div className="flex items-center gap-1 text-[#212124]">
           {/* 검색 버튼 */}
           <button
             type="button"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="p-1.5 hover:bg-[#F2F3F6] rounded-full transition-colors"
+            className="p-2 hover:bg-[#F2F3F6] rounded-full transition-colors cursor-pointer"
             title="검색"
           >
             <span className="w-5 h-5 inline-flex items-center justify-center">
@@ -143,13 +127,13 @@ export const KarrotHeader: React.FC<KarrotHeaderProps> = ({
           <button
             type="button"
             onClick={() => alert("새로운 당근 공식인증 판매점 특가 알림이 없습니다.")}
-            className="p-1.5 hover:bg-[#F2F3F6] rounded-full transition-colors relative"
+            className="p-2 hover:bg-[#F2F3F6] rounded-full transition-colors relative cursor-pointer"
             title="알림"
           >
             <span className="w-5 h-5 inline-flex items-center justify-center">
               <IconBellLine />
             </span>
-            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#FF6F0F]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FF6F0F]" />
           </button>
         </div>
       </div>
