@@ -189,9 +189,9 @@ export default function Home() {
               <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#FF6F0F] text-white text-[10px] font-black rounded-md">
                 <span>당근 공식인증 판매점</span>
               </div>
-              <h2 className="text-base font-black text-[#212124] tracking-tight">
-                우리 동네 휴대폰 성지, <br />
-                <span className="text-[#FF6F0F]">당근모바일 🥕</span>
+              <h2 className="text-xl font-black text-[#212124] tracking-tight leading-snug">
+                우리 동네 휴대폰 성지 <br />
+                <span className="text-[#FF6F0F]">당근 모바일 🥕</span>
               </h2>
               <p className="text-xs text-[#4D5159] leading-snug">
                 통신 3사 지원금 + 단독 추가지원금 최대 43만 원 할인!
